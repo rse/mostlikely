@@ -41,11 +41,11 @@ based on multiple non-cryptographically hash functions and a bit-field.
 The distinct features of MostLikely (compared to standard Bloom Filter
 implementations) are:
 
-- support element removal through counting Bloom filter variant,
-- derives its required distinct hash functions from a set of real hash functions (MurmurHash3, Jenkins, CRC32, DJBX33X and FNV),
-- supports RLE compressed and Base16 or Z85 encoded exporting/importing,
-- standalone/dependency-free implementation and
-- supports both Node and Browser environments.
+- supports element removal operation through a counting Bloom filter variant,
+- derives its required hash functions from a set of distinct hash functions (MurmurHash3, Jenkins, CRC32, DJBX33X and FNV),
+- supports exporting/importing through Run-Length Encoding (RLE) compression and Base16/Z85 encoding,
+- is a standalone/dependency-free implementation and
+- supports both Node and Browser run-time environments.
 
 Application Programming Interface
 ---------------------------------
