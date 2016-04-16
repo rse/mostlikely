@@ -58,38 +58,35 @@ Example
 import MostLikely from "mostlikely"
 
 /*  use Pure-UUID and Chai (just for test-driving)  */
-import UUID       from "pure-uuid"
-import Chai       from "chai"
+import UUID from "pure-uuid"
+import Chai from "chai"
 
 /*  configure the expectations  */
-const [ bits, errorRate, worstErrorRate ] = [ 1000, 0.005, 0.010 ]
+const [ itemCount, errorRate, worstErrorRate ] = [ 1000, 0.005, 0.010 ]
 
 /*  create a new set  */
-const ml = new MostLikely(bits, errorRate)
+const ml = new MostLikely(itemCount, errorRate)
 
 /*  create 1000 positive test elements and insert them into the set  */
 let uuids1 = {}
-for (let i = 0; i < 1000; i++) {
-    let uuid = new UUID(1)
-    uuids1[i] = uuid
-    ml.insert(uuid, 16)
+for (let i = 0; i < itemCount; i++) {
+    uuids1[i] = new UUID(1)
+    ml.insert(uuids1[i], 16)
 }
 
 /*  create 1000 negative test elements (which are NOT inserted into the set)  */
 let uuids2 = {}
-for (let i = 0; i < 1000; i++) {
-    let uuid = new UUID(1)
-    uuids2[i] = uuid
-}
+for (let i = 0; i < itemCount; i++)
+    uuids2[i] = new UUID(1)
 
 /*  check our expectations */
 let [ err1, err2 ] = [ 0, 0 ]
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < itemCount; i++) {
     if (!ml.contains(uuids1[i], 16)) err1++
     if ( ml.contains(uuids2[i], 16)) err2++
 }
-Chai.expect(err1 / bits).to.be.equal(0)
-Chai.expect(err2 / bits).to.be.most(worstErrorRate)
+Chai.expect(err1 / itemCount).to.be.equal(0)
+Chai.expect(err2 / itemCount).to.be.most(worstErrorRate)
 ```
 
 Application Programming Interface
