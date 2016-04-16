@@ -52,23 +52,49 @@ Application Programming Interface
 
 MostLikely provides the following API:
 
-- `MostLikely::new(itemCount?: Number, errorRate?: Number, mask?: Boolean, counter?: Boolean): MostLikely`
+- `MostLikely::new(itemCount?: Number = 1000000, errorRate?: Number = 0.005, mask?: Boolean = true, counter?: Boolean = true): MostLikely`:<br/>
+  Creates a new MostLikely set, intended for an expected number of
+  `itemCount` items, an expected "false positive" error rate `errorRate`
+  and internally using a `mask`-based bit-field and/or a `counter`-based
+  bit-field.
 
-- `MostLikely::export(type?: String): Object`
+- `MostLikely::export(type?: String = "rle+z85"): Object`:<br/>
+  Export the MostLikely set into a JSON-encodable object.
 
-- `MostLikely::import(obj: Object, type?: String): MostLikely`
+- `MostLikely::import(obj: Object, type?: String = "rle+z85"): MostLikely`:<br/>
+  Import the MostLikely set from a (previously exported) JSON-encodable object.
 
-- `MostLikely::format(type): String`
+- `MostLikely::format(type?: String = "rle+z85"): String`:<br/>
+  Format the MostLikely set into a network transmitable string representation.
 
-- `MostLikely::parse(str: String, type?: String): MostLikely`
+- `MostLikely::parse(str: String, type?: String = "rle+z85"): MostLikely`:<br/>
+  Parse the MostLikely set from a (previously formatted) network transmitable string representation.
 
-- `MostLikely::insert(data: any[], size?: Number): MostLikely`
+- `MostLikely::insert(data: any[], size?: Number = data.length): MostLikely`:<br/>
+  Insert an element into the MostLikely set. The element has to be an
+  `Array`-like data structure (usually either a real `Array`, a typed
+  array like `Uint8Array` or a `String`).
 
-- `MostLikely::remove(data: any[], size?: Number): MostLikely`
+- `MostLikely::remove(data: any[], size?: Number = data.length): MostLikely`:<br/>
+  Remove an element from the MostLikely set. The element has to be an
+  `Array`-like data structure (usually either a real `Array`, a typed
+  array like `Uint8Array` or a `String`). This operation requires
+  the MostLikely set to be instanciated with `counter` enabled.
 
-- `MostLikely::contains(data: any[], size?: Number): Boolean`
+- `MostLikely::contains(data: any[], size?: Number = data.length): Boolean`:<br/>
+  Checks whether an element was inserted into the MostLikely set. The
+  element has to be an `Array`-like data structure (usually either a
+  real `Array`, a typed array like `Uint8Array` or a `String`). If
+  this function returns `false`, you can be 100% sure the element was
+  not inserted into the set. If this function returns `true` it is
+  most-likely the element was inserted into the set, but it can be also
+  a false positive (expected to happen only with a probability of the
+  configured `errorRate`). In other words: on `errorRate=0.005` you have
+  to expect that this function returns `true` in 5% of all cases even
+  for elements which were NOT inserted into the set.
 
-- `MostLikely::clear(): MostLikely`
+- `MostLikely::clear(): MostLikely`:<br/>
+  Removes all previously inserted elements from the MostLikely set.
 
 Implementation Notice
 ---------------------
