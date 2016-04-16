@@ -62,7 +62,15 @@ MostLikely provides the following API:
   bit-field.
 
 - `MostLikely::export(type?: String = "rle+z85"): Object`:<br/>
-  Export the MostLikely set into a JSON-encodable object.
+  Export the MostLikely set into a JSON-encodable object. The object
+  is of the following type: `{ bits: Number, hashes: Number, mask?:
+  String, cntr?: String }`. The `bits` is the number of bits the
+  `mask` bit-field contains (the `cntr` bit-field contains `bits * 4`
+  bits instead). The `hashes` is the number of distinct hashes which
+  are used. The `mask` (if present) is the encoded (and optionally
+  compressed) bit-field of `bits` number of bits. The `cntr` (if
+  present) is the encoded (and optionally compressed) bit-field of `bits
+  * 4` number of bits.
 
 - `MostLikely::import(obj: Object, type?: String = "rle+z85"): MostLikely`:<br/>
   Import the MostLikely set from a (previously exported) JSON-encodable object.
