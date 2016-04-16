@@ -28,15 +28,24 @@ $ bower install mostlikely
 About
 -----
 
-Data Structure library for JavaScript (for use in Node.js and the browser),...
+MostLikely is a library for JavaScript (for use in the Node and Browser
+environment), providing a space-efficient probabilistic data structure
+that can be used to test whether an element is a member of a set. False
+positive matches are possible, but false negatives are not, i.e., a
+query returns either "possibly in set" (within a configured error rate)
+or "definitely not in set" (with a 100% accurancy).
 
-FIXME
+Internally, MostLikely is based on a [Bloom
+Filter](https://en.wikipedia.org/wiki/Bloom_filter), which in turn is
+based on multiple non-cryptographically hash functions and a bit-field.
+The distinct features of MostLikely (compared to standard Bloom Filter
+implementations) are:
 
-standalone/dependency-free
-browser/node support
-multiple hashes based
-RLE-compressed B16/Z85 export/import
-counter/mask support
+- support element removal through counting Bloom filter variant,
+- derives its required distinct hash functions from a set of real hash functions (MurmurHash3, Jenkins, CRC32, DJBX33X and FNV),
+- supports RLE compressed and Base16 or Z85 encoded exporting/importing,
+- standalone/dependency-free implementation and
+- supports both Node and Browser environments.
 
 Application Programming Interface
 ---------------------------------
