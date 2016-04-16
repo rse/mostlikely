@@ -33,7 +33,7 @@ environment), providing a space-efficient probabilistic data structure
 that can be used to test whether an element is a member of a set. False
 positive matches are possible, but false negatives are not, i.e., a
 query returns either "possibly in set" (within a configured error rate)
-or "definitely not in set" (with a 100% accurancy).
+or "definitely not in set" (with a 100% accuracy).
 
 Internally, MostLikely is based on a [Bloom
 Filter](https://en.wikipedia.org/wiki/Bloom_filter), which in turn is
@@ -41,8 +41,8 @@ based on multiple non-cryptographically hash functions and a bit-field.
 The distinct features of MostLikely (compared to standard Bloom Filter
 implementations) are:
 
-- supports element removal operation through a counting Bloom filter variant,
-- derives its required hash functions from a set of distinct hash functions (MurmurHash3, Jenkins, CRC32, DJBX33X and FNV),
+- optionally supports element removal operation through a counting Bloom filter variant,
+- derives its required hash functions from a full set of distinct hash functions (MurmurHash3, Jenkins, CRC32, DJBX33X and FNV),
 - supports exporting/importing through Run-Length Encoding (RLE) compression and Base16/Z85 encoding,
 - is a standalone/dependency-free implementation and
 - supports both Node and Browser run-time environments.
@@ -52,7 +52,23 @@ Application Programming Interface
 
 MostLikely provides the following API:
 
-FIXME
+- `MostLikely::new(itemCount?: Number, errorRate?: Number, mask?: Boolean, counter?: Boolean): MostLikely`
+
+- `MostLikely::export(type?: String): Object`
+
+- `MostLikely::import(obj: Object, type?: String): MostLikely`
+
+- `MostLikely::format(type): String`
+
+- `MostLikely::parse(str: String, type?: String): MostLikely`
+
+- `MostLikely::insert(data: any[], size?: Number): MostLikely`
+
+- `MostLikely::remove(data: any[], size?: Number): MostLikely`
+
+- `MostLikely::contains(data: any[], size?: Number): Boolean`
+
+- `MostLikely::clear(): MostLikely`
 
 Implementation Notice
 ---------------------
