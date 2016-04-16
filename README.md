@@ -50,6 +50,48 @@ implementations) are:
 - is a standalone/dependency-free implementation and
 - supports both Node and Browser run-time environments.
 
+Example
+-------
+
+```js
+/*  use MostLikely  */
+import MostLikely from "mostlikely"
+
+/*  use Pure-UUID and Chai (just for test-driving)  */
+import UUID       from "pure-uuid"
+import Chai       from "chai"
+
+/*  configure the expectations  */
+const [ bits, errorRate, worstErrorRate ] = [ 1000, 0.005, 0.010 ]
+
+/*  create a new set  */
+const ml = new MostLikely(bits, errorRate)
+
+/*  create 1000 positive test elements and insert them into the set  */
+let uuids1 = {}
+for (let i = 0; i < 1000; i++) {
+    let uuid = new UUID(1)
+    uuids1[i] = uuid
+    ml.insert(uuid, 16)
+}
+
+/*  create 1000 negative test elements (which are NOT inserted into the set)  */
+let uuids2 = {}
+for (let i = 0; i < 1000; i++) {
+    let uuid = new UUID(1)
+    uuids2[i] = uuid
+}
+
+/*  check our expectations */
+let [ err1, err2 ] = [ 0, 0 ]
+for (let i = 0; i < 1000; i++) {
+    if (!ml.contains(uuids1[i], 16)) err1++
+    if ( ml.contains(uuids2[i], 16)) err2++
+}
+Chai.expect(err1 / bits).to.be.equal(0)
+Chai.expect(err2 / bits).to.be.most(worstErrorRate)
+```
+
 Application Programming Interface
 ---------------------------------
 
@@ -62,7 +104,7 @@ MostLikely provides the following API:
   bit-field.
 
 - `MostLikely::export(type?: String = "rle+z85"): Object`:<br/>
-  Export the MostLikely set into a JSON-encodable object. The object
+  Export the MostLikely set into a JSON-encodable object. The returned object
   is of the following type: `{ bits: Number, hashes: Number, mask?:
   String, cntr?: String }`. The `bits` is the number of bits the
   `mask` bit-field contains (the `cntr` bit-field contains `bits * 4`
