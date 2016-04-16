@@ -38,6 +38,9 @@ or "definitely not in set" (with a 100% accuracy).
 Internally, MostLikely is based on a [Bloom
 Filter](https://en.wikipedia.org/wiki/Bloom_filter), which in turn is
 based on multiple non-cryptographically hash functions and a bit-field.
+The essential point of Bloom Filters and hence MostLikely is that it is
+a very space-efficient data-structure for representing a set.
+
 The distinct features of MostLikely (compared to standard Bloom Filter
 implementations) are:
 
