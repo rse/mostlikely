@@ -5,10 +5,10 @@ mostlikely
 Most-Likely Classification Through Bloom-Filtering
 
 <p/>
-<img src="https://nodei.co/npm/asty.png?downloads=true&stars=true" alt=""/>
+<img src="https://nodei.co/npm/mostlikely.png?downloads=true&stars=true" alt=""/>
 
 <p/>
-<img src="https://david-dm.org/rse/asty.png" alt=""/>
+<img src="https://david-dm.org/rse/mostlikely.png" alt=""/>
 
 Installation
 ------------
