@@ -41,7 +41,7 @@ module.exports = function (grunt) {
         },
         eslint: {
             options: {
-                config: "eslint.json"
+                configFile: "eslint.json"
             },
             "mostlikely": [ "src/**/*.js", "tst/**/*.js" ]
         },
