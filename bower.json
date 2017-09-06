@@ -1,6 +1,6 @@
 {
     "name":        "mostlikely",
-    "version":     "0.9.7",
+    "version":     "1.0.0",
     "description": "Most-Likely Classification Through Bloom-Filtering",
     "main":        "lib/mostlikely.browser.js",
     "homepage":    "https://github.com/rse/mostlikely",
