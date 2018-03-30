@@ -13,16 +13,8 @@ Most-Likely Classification Through Bloom-Filtering
 Installation
 ------------
 
-#### Node environments (with NPM package manager):
-
 ```shell
 $ npm install mostlikely
-```
-
-#### Browser environments (with Bower package manager):
-
-```shell
-$ bower install mostlikely
 ```
 
 About
