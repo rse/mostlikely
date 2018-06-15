@@ -165,7 +165,7 @@ export default class BloomFilter {
         false negatives (i.e. it 100% determines whether the data was
         NOT inserted) and causes false positives (i.e. it determines
         that the data was inserted, even if it actually was not) with
-        approximately the expected errror rate  */
+        approximately the expected error rate  */
     contains (data, size = data.length) {
         for (let i = 0; i < this.nHashes; i++) {
             let idx = hash(i, this.nHashes, data, size) % this.nBits
