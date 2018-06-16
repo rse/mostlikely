@@ -39,7 +39,7 @@ module.exports = class B16 {
     }
     static decode (str, dest) {
         if (typeof dest === "undefined")
-            dest = new OctetArray.create(str.length / 2, false)
+            dest = OctetArray.create(str.length / 2, false)
         let pos = 0
         for (let i = 0, l = str.length; i < l; i += 2)
             dest[pos++] = parseInt(str.substr(i, 2), 16)
