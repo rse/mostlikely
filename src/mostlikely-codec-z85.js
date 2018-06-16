@@ -26,6 +26,8 @@
     See http://rfc.zeromq.org/spec:32 for details on Z85.
     This code supports both raw Z85 and Z85 with padding.  */
 
+const OctetArray = require("./mostlikely-type-octetarray.js")
+
 /*  the encoder mapping table  */
 const encoder = (
     "0123456789" +
@@ -71,12 +73,12 @@ module.exports = class Z85 {
             if ((i % INPUT_BLOCKLEN) === 0) {
                 let divisor = OUTPUT_DIVISOR
                 while (divisor >= 1) {
-                    let idx = Math.floor(value / divisor) % OUTPUT_BASE
+                    let idx = Math.trunc(value / divisor) % OUTPUT_BASE
                     str += encoder[idx]
-                    divisor /= OUTPUT_BASE
+                    divisor = Math.trunc(divisor / OUTPUT_BASE)
                 }
                 value = 0
-             }
+            }
         }
         return str
     }
@@ -84,19 +86,19 @@ module.exports = class Z85 {
     /*  raw Z85 decoding (no padding support)  */
     static decodeRaw (input, size = input.length) {
         if ((size % OUTPUT_BLOCKLEN) !== 0)
-            throw new Error(`decodeRaw: invalid input length (multiple of ${OUTPUT_BLOCKLEN} expected)`);
-        let dest = new Array(size * INPUT_BLOCKLEN / OUTPUT_BLOCKLEN)
+            throw new Error(`decodeRaw: invalid input length (multiple of ${OUTPUT_BLOCKLEN} expected)`)
+        let dest = OctetArray.create(Math.round(size * (INPUT_BLOCKLEN / OUTPUT_BLOCKLEN)), false)
         let i = 0, j = 0, value = 0
         while (i < size) {
             let idx = input.charCodeAt(i++) - 32
             if (idx < 0 || idx >= decoder.length)
-                break
+                throw new Error("decodeRaw: invalid Z85 encoding")
             value = (value * OUTPUT_BASE) + decoder[idx]
             if ((i % OUTPUT_BLOCKLEN) === 0) {
                 let divisor = INPUT_DIVISOR
                 while (divisor >= 1) {
-                    dest[j++] = Math.trunc((value / divisor) % INPUT_BASE)
-                    divisor /= INPUT_BASE
+                    dest[j++] = Math.trunc(value / divisor) % INPUT_BASE
+                    divisor = Math.trunc(divisor / INPUT_BASE)
                 }
                 value = 0
             }
@@ -107,32 +109,31 @@ module.exports = class Z85 {
     /*  Z85 encoding  */
     static encode (input, size = input.length) {
         let sig = size % INPUT_BLOCKLEN
-        let pad = INPUT_BLOCKLEN - sig
+        let pad = (INPUT_BLOCKLEN - sig) % INPUT_BLOCKLEN
         let sizeBorder = size - sig
         let output = this.encodeRaw(input, sizeBorder)
         if (sig > 0) {
-            let suffix = new Array(INPUT_BLOCKLEN)
+            let suffix = OctetArray.create(INPUT_BLOCKLEN, false)
             for (let i = 0; i < INPUT_BLOCKLEN; i++)
-                suffix[i] = i < sig ? input[sizeBorder + i] : 0
+                suffix[i] = i < sig ? input[sizeBorder + i] : 0x00
             let out = this.encodeRaw(suffix, INPUT_BLOCKLEN)
-            output += out.substr(0, OUTPUT_BLOCKLEN - pad)
+            output += out + pad.toString()
         }
         return output
     }
 
     /*  Z85 decoding  */
     static decode (input, size = input.length) {
-        let pad = OUTPUT_BLOCKLEN - (size % OUTPUT_BLOCKLEN)
-        if (pad > 0) {
-            let suffix = ""
-            for (let i = 0; i < pad; i++)
-                suffix += "u"
-            input += suffix
-            size += pad
+        let pad = 0
+        if ((size % OUTPUT_BLOCKLEN) === 1) {
+            pad = parseInt(input[size - 1])
+            if (pad < 1 || pad > 3)
+                throw new Error("decode: invalid padding information")
+            size--
         }
         let output = this.decodeRaw(input, size)
         if (pad > 0)
-            output.splice(output.length - pad, pad)
+            output = output.slice(0, output.length - pad)
         return output
     }
 }
