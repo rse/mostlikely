@@ -94,12 +94,15 @@ export default class BloomFilter {
 
     /*  export Bloom Filter details  */
     export (type = "rle+z85") {
-        return {
+        let result = {
             bits:   this.nBits,
-            hashes: this.nHashes,
-            mask:   this.bfMask ? this.bfMask.export(type) : null,
-            cntr:   this.bfCntr ? this.bfCntr.export(type) : null
+            hashes: this.nHashes
         }
+        if (this.bfMask)
+            result.mask = this.bfMask.export(type)
+        if (this.bfCntr)
+            result.cntr = this.bfCntr.export(type)
+        return result
     }
 
     /*  import Bloom Filter details  */
