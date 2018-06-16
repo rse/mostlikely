@@ -145,12 +145,10 @@ Although MostLikely is written in ECMAScript 6, it is transpiled to
 ECMAScript 5 and this way runs in really all(!) current (as of 2016)
 JavaScript environments, of course.
 
-Additionally, there are two transpilation results: first, there is
-`mostlikely.browser.js` (plus `mostlikely.browser.map`) for Browser
-environments. This is a size-compressed variant but still with
-source-map for debugging. Second, there is `mostlikely.node.js` for
-Node.js/IO.js environments. This is a variant without compression and no
-source-maps.
+Additionally, there are two transpilation results: first, there
+is `mostlikely.browser.js` for Browser environments. This is a
+size-compressed variant. Second, there is `mostlikely.node.js` for
+Node.js/IO.js environments. This is a variant without compression.
 
 License
 -------
