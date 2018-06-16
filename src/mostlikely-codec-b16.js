@@ -24,9 +24,11 @@
 
 /*  Base16 (aka hexadecimal) encoding/decoding  */
 
+const OctetArray = require("./mostlikely-type-octetarray.js")
+
 module.exports = class B16 {
     static encode (data, size = data.length) {
-        let arr = new Array(size)
+        let arr = OctetArray.create(size, false)
         for (let i = 0; i < size; i++) {
             let hex = data[i].toString(16).toUpperCase()
             if (hex.length < 2)
@@ -37,7 +39,7 @@ module.exports = class B16 {
     }
     static decode (str, dest) {
         if (typeof dest === "undefined")
-            dest = new Array(str.length / 2);
+            dest = new OctetArray.create(str.length / 2, false)
         let pos = 0
         for (let i = 0, l = str.length; i < l; i += 2)
             dest[pos++] = parseInt(str.substr(i, 2), 16)
