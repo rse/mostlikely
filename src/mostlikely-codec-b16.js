@@ -28,7 +28,7 @@ const OctetArray = require("./mostlikely-type-octetarray.js")
 
 module.exports = class B16 {
     static encode (data, size = data.length) {
-        let arr = OctetArray.create(size, false)
+        let arr = new Array(size)
         for (let i = 0; i < size; i++) {
             let hex = data[i].toString(16).toUpperCase()
             if (hex.length < 2)
