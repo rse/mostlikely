@@ -73,6 +73,16 @@ describe("MostLikely Library", () => {
         expect(actualErrorRate).to.be.most(worstErrorRate)
     })
     it("export/import functionality", () => {
+        let ml = new MostLikely(1000, 0.001)
+        for (let i = 0; i < 1000; i++) {
+            var uuid = new UUID(1)
+            ml.insert(uuid, 16)
+        }
+        let data = ml.export()
+        let ml2 = new MostLikely(1000, 0.001)
+        ml2.import(data)
+        let data2 = ml2.export()
+        expect(data).to.be.deep.equal(data2)
     })
 })
 
