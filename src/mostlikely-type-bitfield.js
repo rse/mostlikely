@@ -36,7 +36,7 @@ export default class BitField {
         else if (args.length === 1 && typeof args[0] === "number") {
             if (args[0] % 8 !== 0)
                 throw new Error("number of bits have to be a multiple of 8")
-            let numBytes = args[0] >> 3
+            let numBytes = args[0] >>> 3
             this.data = OctetArray.create(numBytes, true)
         }
         else
@@ -46,17 +46,17 @@ export default class BitField {
         return (this.data.length << 3)
     }
     get (pos) {
-        let posByte = pos >> 3
+        let posByte = pos >>> 3
         if (posByte >= this.data.length)
             throw new Error("bit position out of range")
-        let posBit = 0x80 >> (pos % 8)
+        let posBit = 0x80 >>> (pos % 8)
         return !!(this.data[posByte] & posBit)
     }
     set (pos, val) {
-        let posByte = pos >> 3
+        let posByte = pos >>> 3
         if (posByte >= this.data.length)
             throw new Error("bit out of range")
-        let posBit = 0x80 >> (pos % 8)
+        let posBit = 0x80 >>> (pos % 8)
         if (val)
             this.data[posByte] |= posBit
         else
