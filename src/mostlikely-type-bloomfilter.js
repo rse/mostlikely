@@ -133,7 +133,7 @@ export default class BloomFilter {
     /*  insert data into the Bloom filter  */
     insert (data, size = data.length) {
         for (let i = 0; i < this.nHashes; i++) {
-            var idx = hash(i, this.nHashes, data, size) % this.nBits
+            let idx = hash(i, this.nHashes, data, size) % this.nBits
             if (this.bfCntr) {
                 let num = bf_get(this.bfCntr, idx)
                 num++;
@@ -150,7 +150,7 @@ export default class BloomFilter {
         if (!this.bfCntr)
             throw new Error("remove: removing elements requires counters")
         for (let i = 0; i < this.nHashes; i++) {
-            var idx = hash(i, this.nHashes, data, size) % this.nBits
+            let idx = hash(i, this.nHashes, data, size) % this.nBits
             let num = bf_get(this.bfCntr, idx)
             num--;
             if (num < 0)

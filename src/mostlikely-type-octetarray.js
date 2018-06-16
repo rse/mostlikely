@@ -40,7 +40,7 @@ export default class OctetArray {
         else {
             oa = new Array(size)
             if (clear)
-                for (var i = 0; i < size; i++)
+                for (let i = 0; i < size; i++)
                     oa[i] = 0x00;
         }
         return oa
