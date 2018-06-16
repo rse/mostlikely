@@ -24,12 +24,12 @@
 
 /*  This is a simple bitfield, but with import/export functionality.  */
 
-import Z85         from "./mostlikely-codec-z85"
-import B16         from "./mostlikely-codec-b16"
-import RLE         from "./mostlikely-codec-rle"
-import OctetArray  from "./mostlikely-type-octetarray"
+const Z85         = require("./mostlikely-codec-z85")
+const B16         = require("./mostlikely-codec-b16")
+const RLE         = require("./mostlikely-codec-rle")
+const OctetArray  = require("./mostlikely-type-octetarray")
 
-export default class BitField {
+module.exports = class BitField {
     constructor (...args) {
         if (args.length === 2)
             this.import(...args)

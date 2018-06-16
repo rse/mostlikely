@@ -83,7 +83,7 @@ const crc32_tab = [
     0x2d02ef8d
 ]
 
-export default function CRC32 (data, size = data.length, seed = 1) {
+module.exports = function CRC32 (data, size = data.length, seed = 1) {
     let hash = 0xffffffff ^ seed
     for (let i = 0; i < size; i++)
         hash = crc32_tab[(hash ^ data[i]) & 0xff] ^ (hash >>> 8)

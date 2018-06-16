@@ -27,12 +27,12 @@
     (see https://en.wikipedia.org/wiki/Bloom_filter)  */
 
 /*  internal requirements  */
-import BitField    from "./mostlikely-type-bitfield"
-import MurmurHash3 from "./mostlikely-hash-murmurhash3"
-import Jenkins     from "./mostlikely-hash-jenkins"
-import CRC32       from "./mostlikely-hash-crc32"
-import DJBX33X     from "./mostlikely-hash-djbx33x"
-import FNV         from "./mostlikely-hash-fnv"
+const BitField    = require("./mostlikely-type-bitfield")
+const MurmurHash3 = require("./mostlikely-hash-murmurhash3")
+const Jenkins     = require("./mostlikely-hash-jenkins")
+const CRC32       = require("./mostlikely-hash-crc32")
+const DJBX33X     = require("./mostlikely-hash-djbx33x")
+const FNV         = require("./mostlikely-hash-fnv")
 
 /*  the minimum number of bits for a particular item count and expected error rate  */
 const LN2_SQUARED = Math.LN2 * Math.LN2
@@ -78,7 +78,7 @@ const bf_set = (bf, idx, num) => {
 }
 
 /*  the API class  */
-export default class BloomFilter {
+module.exports = class BloomFilter {
     /*  Bloom Filter object construction  */
     constructor (itemCount = 1000000, errorRate = 0.005, mask = true, counter = false) {
         if (!mask && !counter)

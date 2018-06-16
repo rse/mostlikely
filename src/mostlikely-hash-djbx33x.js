@@ -38,7 +38,7 @@
     version against the original hash function is just the seed argument
     to support Bloom filters.  */
 
-export default function DJBX33X (data, size = data.size, seed = 1) {
+module.exports = function DJBX33X (data, size = data.size, seed = 1) {
     let hash = 5381 * seed
     let i = 0
     for (; size >= 8; size -= 8) {

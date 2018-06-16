@@ -35,7 +35,7 @@
     of the fastest hashes. See http://isthe.com/chongo/tech/comp/fnv/
     for details. */
 
-export default function FNV (data, size = data.length, seed = 1) {
+module.exports = function FNV (data, size = data.length, seed = 1) {
     let hash = 0x811C9DC5 * seed
     for (let i = 0; i < size; i++) {
         hash = hash ^ data[i]

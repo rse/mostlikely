@@ -24,7 +24,7 @@
 
 /*  Base16 (aka hexadecimal) encoding/decoding  */
 
-export default class B16 {
+module.exports = class B16 {
     static encode (data, size = data.length) {
         let arr = new Array(size)
         for (let i = 0; i < size; i++) {

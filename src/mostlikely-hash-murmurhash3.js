@@ -32,7 +32,7 @@ const mul32  = (a, b) => (a & 0xffff) * b + (((a >>> 16) * b & 0xffff) << 16) & 
 const sum32  = (a, b) => (a & 0xffff) + (b >>> 16) + (((a >>> 16) + b & 0xffff) << 16) & 0xffffffff
 const rotl32 = (a, b) => (a << b) | (a >>> (32 - b))
 
-export default function MurmurHash3 (data, size = data.length, seed = 1) {
+module.exports = function MurmurHash3 (data, size = data.length, seed = 1) {
     let c1 = 0xcc9e2d51
     let c2 = 0x1b873593
     let r1 = 15

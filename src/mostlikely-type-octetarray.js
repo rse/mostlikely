@@ -27,7 +27,7 @@
 /* global Uint8Array: false */
 /* global Buffer: false */
 
-export default class OctetArray {
+module.exports = class OctetArray {
     static create (size, clear) {
         let oa
         if (typeof Buffer !== "undefined") {
@@ -42,7 +42,7 @@ export default class OctetArray {
             oa = new Array(size)
             if (clear)
                 for (let i = 0; i < size; i++)
-                    oa[i] = 0x00;
+                    oa[i] = 0x00
         }
         return oa
     }

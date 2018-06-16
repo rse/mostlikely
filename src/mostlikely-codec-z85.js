@@ -59,7 +59,7 @@ const OUTPUT_BASE     = 85
 const OUTPUT_DIVISOR  = Math.pow(OUTPUT_BASE, 4)
 
 /*  the API class  */
-export default class Z85 {
+module.exports = class Z85 {
 
     /*  raw Z85 encoding (no padding support)  */
     static encodeRaw (input, size = input.length) {

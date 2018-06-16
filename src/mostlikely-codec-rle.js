@@ -24,7 +24,7 @@
 
 /*  Run-Length-Encoding (RLE) for zeros.  */
 
-export default class RLE {
+module.exports = class RLE {
     static encodeSize (from) {
         let l = from.length
         let j = 0

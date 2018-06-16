@@ -28,7 +28,7 @@
     difference of this version against the original hash function is
     just the seed argument to support Bloom filters.  */
 
-export default function Jenkins (u8, size = u8.length, seed = 1) {
+module.exports = function Jenkins (u8, size = u8.length, seed = 1) {
     let a = 0
     let b = 0
     let c = 0

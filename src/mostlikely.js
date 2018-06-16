@@ -22,6 +22,6 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-import BloomFilter from "./mostlikely-type-bloomfilter"
+const BloomFilter = require("./mostlikely-type-bloomfilter")
 module.exports = BloomFilter
 
