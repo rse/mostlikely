@@ -27,16 +27,16 @@
 /* jshint -W030 */
 /* eslint no-unused-expressions: 0 */
 
-var chai = require("chai")
-var expect = chai.expect
+const chai = require("chai")
+const expect = chai.expect
 chai.config.includeStack = true
 
-var MostLikely = require("../lib/mostlikely.node.js")
-var UUID = require("pure-uuid")
+const MostLikely = require("../lib/mostlikely.node.js")
+const UUID = require("pure-uuid")
 
-describe("MostLikely Library", function () {
-    it("API availability", function () {
-        var ml = new MostLikely()
+describe("MostLikely Library", () => {
+    it("API availability", () => {
+        let ml = new MostLikely()
         expect(ml).to.respondTo("export")
         expect(ml).to.respondTo("import")
         expect(ml).to.respondTo("parse")
@@ -46,32 +46,33 @@ describe("MostLikely Library", function () {
         expect(ml).to.respondTo("contains")
         expect(ml).to.respondTo("clear")
     })
-    it("base functionality", function () {
-        var bits = 1000
-        var errorRate = 0.005
-        var worstErrorRate = 0.010
-        var ml = new MostLikely(bits, errorRate)
-        var uuids1 = {}
-        var uuids2 = {}
-        var i
-        for (i = 0; i < 1000; i++) {
+    it("base functionality", () => {
+        let bits = 1000
+        let errorRate = 0.005
+        let worstErrorRate = 0.010
+        let ml = new MostLikely(bits, errorRate)
+        let uuids1 = {}
+        let uuids2 = {}
+        for (let i = 0; i < 1000; i++) {
             var uuid = new UUID(1)
             uuids1[i] = uuid
             ml.insert(uuid, 16)
             uuid = new UUID(1)
             uuids2[i] = uuid
         }
-        var err1 = 0
-        var err2 = 0
-        for (i = 0; i < 1000; i++) {
+        let err1 = 0
+        let err2 = 0
+        for (let i = 0; i < 1000; i++) {
             if (!ml.contains(uuids1[i], 16))
                 err1++
             if (ml.contains(uuids2[i], 16))
                 err2++
         }
         expect(err1).to.be.equal(0)
-        var actualErrorRate = err2 / bits
+        let actualErrorRate = err2 / bits
         expect(actualErrorRate).to.be.most(worstErrorRate)
+    })
+    it("export/import functionality", () => {
     })
 })
 
