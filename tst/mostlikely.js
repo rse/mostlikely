@@ -72,6 +72,42 @@ describe("MostLikely Library", () => {
         let actualErrorRate = err2 / bits
         expect(actualErrorRate).to.be.most(worstErrorRate)
     })
+    it("B16 coded", () => {
+        const B16 = require("../src/mostlikely-codec-b16.js")
+        const drive = (str) => {
+            let data = typeof str === "string" ? Buffer.from(str) : str
+            let enc = B16.encode(data)
+            let data2 = B16.decode(enc)
+            expect(data.toString()).to.be.equal(data2.toString())
+        }
+        drive("")
+        drive(Buffer.from([0x00]))
+        drive(Buffer.from([0x00, 0x00, 0x00, 0x00]))
+        drive(Buffer.from([0x01, 0x02, 0x03]))
+        drive(Buffer.from([0x86, 0x4F, 0xD2, 0x6F, 0xB5, 0x59, 0xF7, 0x5B]))
+        drive("foo")
+        drive("fooo")
+        drive("foo!foo")
+        drive("foo!")
+    })
+    it("Z85 coded", () => {
+        const Z85 = require("../src/mostlikely-codec-z85.js")
+        const drive = (str) => {
+            let data = typeof str === "string" ? Buffer.from(str) : str
+            let enc = Z85.encode(data)
+            let data2 = Z85.decode(enc)
+            expect(data.toString()).to.be.equal(data2.toString())
+        }
+        drive("")
+        drive(Buffer.from([0x00]))
+        drive(Buffer.from([0x00, 0x00, 0x00, 0x00]))
+        drive(Buffer.from([0x01, 0x02, 0x03]))
+        drive(Buffer.from([0x86, 0x4F, 0xD2, 0x6F, 0xB5, 0x59, 0xF7, 0x5B]))
+        drive("foo")
+        drive("fooo")
+        drive("foo!foo")
+        drive("foo!")
+    })
     it("export/import functionality", () => {
         let ml = new MostLikely(1000, 0.001)
         for (let i = 0; i < 1000; i++) {
