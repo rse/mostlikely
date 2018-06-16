@@ -43,10 +43,18 @@ module.exports = function (grunt) {
                 },
                 options: {
                     transform: [
-                        [ "babelify", { presets: [ "es2015" ] } ]
+                        [ "babelify", {
+                            presets: [
+                                [ "env", {
+                                    "targets": {
+                                        "browser": [ "last 8 versions", "> 1%", "ie 9" ]
+                                    }
+                                } ]
+                            ]
+                        } ],
+                        [ "uglifyify", { sourceMap: false, global: true } ]
                     ],
                     plugin: [
-                        [ "minifyify", { map: "mostlikely.browser.map", output: "lib/mostlikely.browser.map" } ],
                         [ "browserify-derequire" ]
                     ],
                     external: [
@@ -64,7 +72,15 @@ module.exports = function (grunt) {
                 },
                 options: {
                     transform: [
-                        [ "babelify", { presets: [ "es2015" ] } ]
+                        [ "babelify", {
+                            presets: [
+                                [ "env", {
+                                    "targets": {
+                                        "node": [ "8.0.0" ]
+                                    }
+                                } ]
+                            ]
+                        } ]
                     ],
                     plugin: [
                         [ "browserify-derequire" ]
