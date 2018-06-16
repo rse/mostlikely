@@ -31,9 +31,10 @@ export default class OctetArray {
     static create (size, clear) {
         let oa
         if (typeof Buffer !== "undefined") {
-            oa = new Buffer(size)
             if (clear)
-                oa.fill(0x00)
+                oa = new Buffer.alloc(size, 0x00)
+            else
+                oa = new Buffer.allocUnsafe(size)
         }
         else if (typeof Uint8Array !== "undefined")
             oa = new Uint8Array(size)
