@@ -80,7 +80,7 @@ export default class BitField {
         let input = this.data
         if (rle) {
             let size = RLE.encodeSize(this.data)
-            input = new Array(size)
+            input = OctetArray.create(size, false)
             RLE.encode(this.data, input)
         }
         let output
