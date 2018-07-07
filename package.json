@@ -34,7 +34,7 @@
         "browserify-header":    "0.9.4",
         "browserify-derequire": "0.9.6",
         "browserify-replace":   "0.9.3",
-        "pure-uuid":            "1.5.2"
+        "pure-uuid":            "1.5.3"
     },
     "scripts": {
         "prepublishOnly":  "grunt default",
