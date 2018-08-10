@@ -24,7 +24,7 @@
         "grunt-jscs":           "3.0.1",
         "grunt-mocha-test":     "0.13.3",
         "grunt-eslint":         "21.0.0",
-        "babel-eslint":         "8.2.5",
+        "babel-eslint":         "8.2.6",
         "mocha":                "5.2.0",
         "chai":                 "4.1.2",
         "babelify":             "8.0.0",
