@@ -25,7 +25,6 @@
 /*  This provides a little abstraction for an Array of Octets.  */
 
 /* global Uint8Array: false */
-/* global Buffer: false */
 
 module.exports = class OctetArray {
     static create (size, clear) {

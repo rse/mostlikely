@@ -22,8 +22,6 @@
 **  SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-/* global describe: false */
-/* global it: false */
 /* jshint -W030 */
 /* eslint no-unused-expressions: 0 */
 
