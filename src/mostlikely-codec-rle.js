@@ -26,7 +26,7 @@
 
 module.exports = class RLE {
     static encodeSize (from) {
-        let l = from.length
+        const l = from.length
         let j = 0
         for (let i = 0; i < l; i++, j++) {
             if (from[i] === 0) {
@@ -41,7 +41,7 @@ module.exports = class RLE {
         return j
     }
     static encode (from, to) {
-        let l = from.length
+        const l = from.length
         for (let i = 0, j = 0; i < l; i++, j++) {
             to[j] = from[i]
             if (from[i] === 0) {
@@ -56,7 +56,7 @@ module.exports = class RLE {
         return this
     }
     static decodeSize (from) {
-        let l = from.length
+        const l = from.length
         let j = 0
         for (let i = 0; i < l; i++, j++) {
             if (from[i] === 0)
@@ -66,7 +66,7 @@ module.exports = class RLE {
         return j
     }
     static decode (from, to) {
-        let l = from.length
+        const l = from.length
         for (let i = 0, j = 0; i < l; i++, j++) {
             to[j] = from[i]
             if (from[i] === 0)

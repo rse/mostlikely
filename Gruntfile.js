@@ -1,6 +1,6 @@
 /*
 **  MostLikely -- Most-Likely Classification Through Bloom-Filtering
-**  Copyright (c) 2016-2020 Dr. Ralf S. Engelschall <rse@engelschall.com>
+**  Copyright (c) 2016-2021 Dr. Ralf S. Engelschall <rse@engelschall.com>
 **
 **  Permission is hereby granted, free of charge, to any person obtaining
 **  a copy of this software and associated documentation files (the
@@ -32,7 +32,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         eslint: {
             options: {
-                configFile: "eslint.json"
+                configFile: "eslint.yaml"
             },
             "mostlikely": [ "src/**/*.js", "tst/**/*.js" ]
         },

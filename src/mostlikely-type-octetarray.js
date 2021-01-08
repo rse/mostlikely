@@ -31,9 +31,9 @@ module.exports = class OctetArray {
         let oa
         if (typeof Buffer !== "undefined") {
             if (clear)
-                oa = new Buffer.alloc(size, 0x00)
+                oa = Buffer.alloc(size, 0x00)
             else
-                oa = new Buffer.allocUnsafe(size)
+                oa = Buffer.allocUnsafe(size)
         }
         else if (typeof Uint8Array !== "undefined")
             oa = new Uint8Array(size)

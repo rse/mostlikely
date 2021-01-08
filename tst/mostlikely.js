@@ -34,7 +34,7 @@ const UUID = require("pure-uuid")
 
 describe("MostLikely Library", () => {
     it("API availability", () => {
-        let ml = new MostLikely()
+        const ml = new MostLikely()
         expect(ml).to.respondTo("export")
         expect(ml).to.respondTo("import")
         expect(ml).to.respondTo("parse")
@@ -45,14 +45,14 @@ describe("MostLikely Library", () => {
         expect(ml).to.respondTo("clear")
     })
     it("base functionality", () => {
-        let bits = 1000
-        let errorRate = 0.005
-        let worstErrorRate = 0.010
-        let ml = new MostLikely(bits, errorRate)
-        let uuids1 = {}
-        let uuids2 = {}
+        const bits = 1000
+        const errorRate = 0.005
+        const worstErrorRate = 0.010
+        const ml = new MostLikely(bits, errorRate)
+        const uuids1 = {}
+        const uuids2 = {}
         for (let i = 0; i < 1000; i++) {
-            var uuid = new UUID(1)
+            let uuid = new UUID(1)
             uuids1[i] = uuid
             ml.insert(uuid, 16)
             uuid = new UUID(1)
@@ -67,15 +67,15 @@ describe("MostLikely Library", () => {
                 err2++
         }
         expect(err1).to.be.equal(0)
-        let actualErrorRate = err2 / bits
+        const actualErrorRate = err2 / bits
         expect(actualErrorRate).to.be.most(worstErrorRate)
     })
     it("B16 coded", () => {
         const B16 = require("../src/mostlikely-codec-b16.js")
         const drive = (str) => {
-            let data = typeof str === "string" ? Buffer.from(str) : str
-            let enc = B16.encode(data)
-            let data2 = B16.decode(enc)
+            const data = typeof str === "string" ? Buffer.from(str) : str
+            const enc = B16.encode(data)
+            const data2 = B16.decode(enc)
             expect(data.toString()).to.be.equal(data2.toString())
         }
         drive("")
@@ -91,9 +91,9 @@ describe("MostLikely Library", () => {
     it("Z85 coded", () => {
         const Z85 = require("../src/mostlikely-codec-z85.js")
         const drive = (str) => {
-            let data = typeof str === "string" ? Buffer.from(str) : str
-            let enc = Z85.encode(data)
-            let data2 = Z85.decode(enc)
+            const data = typeof str === "string" ? Buffer.from(str) : str
+            const enc = Z85.encode(data)
+            const data2 = Z85.decode(enc)
             expect(data.toString()).to.be.equal(data2.toString())
         }
         drive("")
@@ -107,15 +107,15 @@ describe("MostLikely Library", () => {
         drive("foo!")
     })
     it("export/import functionality", () => {
-        let ml = new MostLikely(1000, 0.001)
+        const ml = new MostLikely(1000, 0.001)
         for (let i = 0; i < 1000; i++) {
-            var uuid = new UUID(1)
+            const uuid = new UUID(1)
             ml.insert(uuid, 16)
         }
-        let data = ml.export()
-        let ml2 = new MostLikely(1000, 0.001)
+        const data = ml.export()
+        const ml2 = new MostLikely(1000, 0.001)
         ml2.import(data)
-        let data2 = ml2.export()
+        const data2 = ml2.export()
         expect(data).to.be.deep.equal(data2)
     })
 })

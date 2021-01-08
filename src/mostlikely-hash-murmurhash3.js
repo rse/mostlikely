@@ -33,12 +33,12 @@ const sum32  = (a, b) => (a & 0xffff) + (b >>> 16) + (((a >>> 16) + b & 0xffff) 
 const rotl32 = (a, b) => (a << b) | (a >>> (32 - b))
 
 module.exports = function MurmurHash3 (data, size = data.length, seed = 1) {
-    let c1 = 0xcc9e2d51
-    let c2 = 0x1b873593
-    let r1 = 15
-    let r2 = 13
-    let m  = 5
-    let n  = 0x6b64e654
+    const c1 = 0xcc9e2d51
+    const c2 = 0x1b873593
+    const r1 = 15
+    const r2 = 13
+    const m  = 5
+    const n  = 0x6b64e654
 
     let hash = 0xFBA4C795 * seed
 
@@ -49,13 +49,13 @@ module.exports = function MurmurHash3 (data, size = data.length, seed = 1) {
             (data[i + 1] <<  8) |
             (data[i + 2] << 16) |
             (data[i + 3] << 24)
-        k1 = mul32 (k1, c1)
+        k1 = mul32(k1, c1)
         k1 = rotl32(k1, r1)
-        k1 = mul32 (k1, c2)
-        hash ^= k1;
+        k1 = mul32(k1, c2)
+        hash ^= k1
         hash = rotl32(hash, r2)
-        hash = mul32 (hash, m)
-        hash = sum32 (hash, n)
+        hash = mul32(hash, m)
+        hash = sum32(hash, n)
     }
 
     k1 = 0
@@ -67,10 +67,10 @@ module.exports = function MurmurHash3 (data, size = data.length, seed = 1) {
             k1 ^= data[i + 1] << 8
             /* falls through */
         case 1:
-            k1 ^= data[i];
-            k1 = mul32 (k1, c1)
+            k1 ^= data[i]
+            k1 = mul32(k1, c1)
             k1 = rotl32(k1, r1)
-            k1 = mul32 (k1, c2)
+            k1 = mul32(k1, c2)
             hash ^= k1
     }
 

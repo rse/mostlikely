@@ -36,7 +36,7 @@ module.exports = class BitField {
         else if (args.length === 1 && typeof args[0] === "number") {
             if (args[0] % 8 !== 0)
                 throw new Error("number of bits have to be a multiple of 8")
-            let numBytes = Math.trunc(args[0] / 8)
+            const numBytes = Math.trunc(args[0] / 8)
             this.data = OctetArray.create(numBytes, true)
         }
         else
@@ -46,17 +46,17 @@ module.exports = class BitField {
         return (this.data.length << 3)
     }
     get (pos) {
-        let posByte = Math.trunc(pos / 8)
+        const posByte = Math.trunc(pos / 8)
         if (posByte >= this.data.length)
             throw new Error("bit position out of range")
-        let posBit = 0x80 >>> (pos % 8)
+        const posBit = 0x80 >>> (pos % 8)
         return !!(this.data[posByte] & posBit)
     }
     set (pos, val) {
-        let posByte = Math.trunc(pos / 8)
+        const posByte = Math.trunc(pos / 8)
         if (posByte >= this.data.length)
             throw new Error("bit out of range")
-        let posBit = 0x80 >>> (pos % 8)
+        const posBit = 0x80 >>> (pos % 8)
         if (val)
             this.data[posByte] |= posBit
         else
@@ -71,7 +71,7 @@ module.exports = class BitField {
     export (type) {
         if (typeof type !== "string" || !type.match(/^(?:rle\+)?(?:array|b16|z85)$/))
             throw new Error("invalid export type")
-        let m = type.match(/^rle\+(.+)$/)
+        const m = type.match(/^rle\+(.+)$/)
         let rle = false
         if (m !== null) {
             rle = true
@@ -79,7 +79,7 @@ module.exports = class BitField {
         }
         let input = this.data
         if (rle) {
-            let size = RLE.encodeSize(this.data)
+            const size = RLE.encodeSize(this.data)
             input = OctetArray.create(size, false)
             RLE.encode(this.data, input)
         }
@@ -95,7 +95,7 @@ module.exports = class BitField {
     import (type, data) {
         if (typeof type !== "string" || !type.match(/^(?:rle\+)?(?:array|b16|z85)$/))
             throw new Error("invalid import type")
-        let m = type.match(/^rle\+(.+)$/)
+        const m = type.match(/^rle\+(.+)$/)
         let rle = false
         if (m !== null) {
             rle = true
@@ -109,12 +109,12 @@ module.exports = class BitField {
         else if (type === "array")
             input = data
         if (rle) {
-            let size = RLE.decodeSize(input)
+            const size = RLE.decodeSize(input)
             this.data = OctetArray.create(size, false)
             RLE.decode(input, this.data)
         }
         else {
-            let size = input.length
+            const size = input.length
             this.data = OctetArray.create(size, false)
             for (let i = 0; i < size; i++)
                 this.data[i] = input[i]

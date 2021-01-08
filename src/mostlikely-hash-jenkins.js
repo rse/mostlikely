@@ -107,7 +107,7 @@ module.exports = function Jenkins (u8, size = u8.length, seed = 1) {
             break
         case 4:
             a = (a + u8[off + 0] + (u8[off + 1] << 8) + (u8[off + 2] << 16) + (u8[off + 3] << 24)) >>> 0
-            break;
+            break
         case 3:
             a = (a + u8[off + 0] + (u8[off + 1] << 8) + (u8[off + 2] << 16)) >>> 0
             break

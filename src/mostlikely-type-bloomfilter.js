@@ -51,10 +51,10 @@ const numHashes = (numBits, itemCount) => {
 /*  the hash functions  */
 const hashes = [
     (data, size, num) => MurmurHash3(data, size, num),
-    (data, size, num) => Jenkins    (data, size, num),
-    (data, size, num) => CRC32      (data, size, num),
-    (data, size, num) => DJBX33X    (data, size, num),
-    (data, size, num) => FNV        (data, size, num)
+    (data, size, num) => Jenkins(data, size, num),
+    (data, size, num) => CRC32(data, size, num),
+    (data, size, num) => DJBX33X(data, size, num),
+    (data, size, num) => FNV(data, size, num)
 ]
 const hash = (num, max, data, size) =>
     hashes[num % hashes.length](data, size, num)
@@ -64,13 +64,13 @@ const COUNTER_BITS = 4
 const COUNTER_MAX  = Math.pow(2, COUNTER_BITS) - 1
 
 /*  counter operations  */
-const bf_get = (bf, idx) => {
+const bfGet = (bf, idx) => {
     let num = 0
     for (let i = 0; i < COUNTER_BITS; i++)
         num += ((bf.get(idx * COUNTER_BITS + i) ? 1 : 0) << i)
     return num
 }
-const bf_set = (bf, idx, num) => {
+const bfSet = (bf, idx, num) => {
     if (num > COUNTER_MAX)
         num = COUNTER_MAX
     for (let i = 0; i < COUNTER_BITS; i++)
@@ -94,7 +94,7 @@ module.exports = class BloomFilter {
 
     /*  export Bloom Filter details  */
     export (type = "rle+z85") {
-        let result = {
+        const result = {
             bits:   this.nBits,
             hashes: this.nHashes
         }
@@ -117,7 +117,7 @@ module.exports = class BloomFilter {
 
     /*  format Bloom Filter exports  */
     format (type = "rle+z85") {
-        let e = this.export(type)
+        const e = this.export(type)
         return `${e.bits},${e.hashes},${e.mask ? e.mask : "-"},${e.cntr ? e.cntr : "-"}`
     }
 
@@ -133,11 +133,11 @@ module.exports = class BloomFilter {
     /*  insert data into the Bloom filter  */
     insert (data, size = data.length) {
         for (let i = 0; i < this.nHashes; i++) {
-            let idx = hash(i, this.nHashes, data, size) % this.nBits
+            const idx = hash(i, this.nHashes, data, size) % this.nBits
             if (this.bfCntr) {
-                let num = bf_get(this.bfCntr, idx)
-                num++;
-                bf_set(this.bfCntr, idx, num)
+                let num = bfGet(this.bfCntr, idx)
+                num++
+                bfSet(this.bfCntr, idx, num)
             }
             if (this.bfMask)
                 this.bfMask.set(idx, true)
@@ -150,12 +150,12 @@ module.exports = class BloomFilter {
         if (!this.bfCntr)
             throw new Error("remove: removing elements requires counters")
         for (let i = 0; i < this.nHashes; i++) {
-            let idx = hash(i, this.nHashes, data, size) % this.nBits
-            let num = bf_get(this.bfCntr, idx)
-            num--;
+            const idx = hash(i, this.nHashes, data, size) % this.nBits
+            let num = bfGet(this.bfCntr, idx)
+            num--
             if (num < 0)
                 num = 0
-            bf_set(this.bfCntr, idx, num)
+            bfSet(this.bfCntr, idx, num)
             if (this.bfMask)
                 if (num === 0)
                     this.bfMask.set(idx, false)
@@ -171,13 +171,13 @@ module.exports = class BloomFilter {
         approximately the expected error rate  */
     contains (data, size = data.length) {
         for (let i = 0; i < this.nHashes; i++) {
-            let idx = hash(i, this.nHashes, data, size) % this.nBits
+            const idx = hash(i, this.nHashes, data, size) % this.nBits
             if (this.bfMask) {
                 if (!this.bfMask.get(idx))
                     return false
             }
             else if (this.bfCntr) {
-                if (bf_get(this.bfCntr, idx) === 0)
+                if (bfGet(this.bfCntr, idx) === 0)
                     return false
             }
         }

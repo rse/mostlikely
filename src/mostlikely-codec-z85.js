@@ -62,18 +62,19 @@ const OUTPUT_DIVISOR  = Math.pow(OUTPUT_BASE, 4)
 
 /*  the API class  */
 module.exports = class Z85 {
-
     /*  raw Z85 encoding (no padding support)  */
     static encodeRaw (input, size = input.length) {
         if ((size % INPUT_BLOCKLEN) !== 0)
             throw new Error(`encodeRaw: invalid input length (multiple of ${INPUT_BLOCKLEN} expected)`)
-        let str = "", i = 0, value = 0
+        let str = ""
+        let i = 0
+        let value = 0
         while (i < size) {
             value = (value * INPUT_BASE) + input[i++]
             if ((i % INPUT_BLOCKLEN) === 0) {
                 let divisor = OUTPUT_DIVISOR
                 while (divisor >= 1) {
-                    let idx = Math.trunc(value / divisor) % OUTPUT_BASE
+                    const idx = Math.trunc(value / divisor) % OUTPUT_BASE
                     str += encoder[idx]
                     divisor = Math.trunc(divisor / OUTPUT_BASE)
                 }
@@ -87,10 +88,12 @@ module.exports = class Z85 {
     static decodeRaw (input, size = input.length) {
         if ((size % OUTPUT_BLOCKLEN) !== 0)
             throw new Error(`decodeRaw: invalid input length (multiple of ${OUTPUT_BLOCKLEN} expected)`)
-        let dest = OctetArray.create(Math.round(size * (INPUT_BLOCKLEN / OUTPUT_BLOCKLEN)), false)
-        let i = 0, j = 0, value = 0
+        const dest = OctetArray.create(Math.round(size * (INPUT_BLOCKLEN / OUTPUT_BLOCKLEN)), false)
+        let i = 0
+        let j = 0
+        let value = 0
         while (i < size) {
-            let idx = input.charCodeAt(i++) - 32
+            const idx = input.charCodeAt(i++) - 32
             if (idx < 0 || idx >= decoder.length)
                 throw new Error("decodeRaw: invalid Z85 encoding")
             value = (value * OUTPUT_BASE) + decoder[idx]
@@ -108,15 +111,15 @@ module.exports = class Z85 {
 
     /*  Z85 encoding  */
     static encode (input, size = input.length) {
-        let sig = size % INPUT_BLOCKLEN
-        let pad = (INPUT_BLOCKLEN - sig) % INPUT_BLOCKLEN
-        let sizeBorder = size - sig
+        const sig = size % INPUT_BLOCKLEN
+        const pad = (INPUT_BLOCKLEN - sig) % INPUT_BLOCKLEN
+        const sizeBorder = size - sig
         let output = this.encodeRaw(input, sizeBorder)
         if (sig > 0) {
-            let suffix = OctetArray.create(INPUT_BLOCKLEN, false)
+            const suffix = OctetArray.create(INPUT_BLOCKLEN, false)
             for (let i = 0; i < INPUT_BLOCKLEN; i++)
                 suffix[i] = i < sig ? input[sizeBorder + i] : 0x00
-            let out = this.encodeRaw(suffix, INPUT_BLOCKLEN)
+            const out = this.encodeRaw(suffix, INPUT_BLOCKLEN)
             output += out + pad.toString()
         }
         return output

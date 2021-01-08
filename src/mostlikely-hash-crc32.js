@@ -28,7 +28,7 @@
     The difference of this version against the original CRC32 is just
     the seed argument to support Bloom filters. */
 
-const crc32_tab = [
+const crc32Tab = [
     0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419,
     0x706af48f, 0xe963a535, 0x9e6495a3, 0x0edb8832, 0x79dcb8a4,
     0xe0d5e91e, 0x97d2d988, 0x09b64c2b, 0x7eb17cbd, 0xe7b82d07,
@@ -86,7 +86,7 @@ const crc32_tab = [
 module.exports = function CRC32 (data, size = data.length, seed = 1) {
     let hash = 0xffffffff ^ seed
     for (let i = 0; i < size; i++)
-        hash = crc32_tab[(hash ^ data[i]) & 0xff] ^ (hash >>> 8)
+        hash = crc32Tab[(hash ^ data[i]) & 0xff] ^ (hash >>> 8)
     hash ^= 0xffffffff
     return (hash >>> 0)
 }
