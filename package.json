@@ -1,6 +1,6 @@
 {
     "name":        "mostlikely",
-    "version":     "1.3.4",
+    "version":     "1.3.5",
     "description": "Most-Likely Classification Through Bloom-Filtering",
     "keywords":    [ "most-likely", "classification", "bloom", "filter" ],
     "main":        "lib/mostlikely.node.js",
